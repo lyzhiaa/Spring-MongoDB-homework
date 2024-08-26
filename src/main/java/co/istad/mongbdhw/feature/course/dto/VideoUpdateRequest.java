@@ -1,10 +1,12 @@
 package co.istad.mongbdhw.feature.course.dto;
 
+import co.istad.mongbdhw.domain.Video;
+
+import java.util.List;
+
 public record VideoUpdateRequest(
-        Integer sectionOrderNumber,
-        String lectureNo,
-        Integer orderNo,
         String title,
-        String fileName
+        Integer orderNo,
+        List<Video> videos
 ) {
 }

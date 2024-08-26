@@ -1,12 +1,14 @@
 package co.istad.mongbdhw.feature.course;
 
 import co.istad.mongbdhw.domain.Course;
+import co.istad.mongbdhw.feature.course.dto.FilterDto;
 import co.istad.mongbdhw.feature.course.dto.*;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,20 +33,22 @@ public class CourseController {
 //        return courseService.findAllCourse(responseType);
 //    }
     //Find all section
-    @GetMapping("/sections")
-    List<SectionResponse> findAllSection() {
-        return courseService.findSection();
-    }
     @GetMapping
-    public List<?> getAllCourses(
+    public PaginatedResponse<?> getAllCourses(
             @Parameter(
                     in = ParameterIn.QUERY,
                     schema = @Schema(type = "string", allowableValues = {"snippet", "content_details"})
             )
-            @RequestParam(defaultValue = "snippet") String responseType) {
+            @RequestParam(defaultValue = "snippet") String responseType,
 
-        // Call the service method with the given responseType
-        return courseService.findAllCourse(responseType);
+            @Parameter(description = "Page number")
+            @RequestParam(defaultValue = "0") int page,
+
+            @Parameter(description = "Page size")
+            @RequestParam(defaultValue = "20") int size) {
+
+        // Call the service method with the given responseType, page, and size
+        return courseService.findAllCourse(responseType, page, size);
     }
 
     //Get course by instructor's name
@@ -92,10 +96,17 @@ public class CourseController {
     public List<Course> getFreeCourse() {
         return courseService.getFreeCourse();
     }
+
     //Update course by id
     @PutMapping("/{id}")
     CourseResponse updateCourse(@Valid @PathVariable String id, @RequestBody CourseUpdateRequest courseUpdateRequest) {
         return courseService.updateCourse(id, courseUpdateRequest);
+    }
+
+    //Update video by courseId
+    @PutMapping("/{courseId}/videos")
+    void updateVideo(@Valid @PathVariable String courseId, @RequestBody VideoUpdateRequest videoUpdateRequest) {
+        courseService.updateVideo(courseId, videoUpdateRequest);
     }
 
     //Delete course by id
@@ -150,5 +161,27 @@ public class CourseController {
         return courseService.createSection(courseId, sectionCreateRequest);
     }
 
+    //Create filter
+    @PostMapping("/filters")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Page<?> createFilter(
+            @RequestBody FilterDto filterDto,
+            @RequestParam(defaultValue = "SNIPPET") FilterResponse response,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size
+    ) {
+        return courseService.createFilter(filterDto, response, page, size);
+    }
+
+    //Get filter
+    @GetMapping("/filters")
+    public Page<?> getFilter(
+            @RequestParam(required = false) String title,
+            @RequestParam(defaultValue = "SNIPPET") FilterResponse response,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size
+    ) {
+        return courseService.getFilter(title, response, page, size);
+    }
 
 }

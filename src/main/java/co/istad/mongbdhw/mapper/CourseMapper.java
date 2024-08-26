@@ -30,8 +30,8 @@ public interface CourseMapper {
     SectionResponse toSectionResponse(Section section);
     //Use for update course
     void fromCourseUpdateRequest(CourseUpdateRequest courseUpdateRequest, @MappingTarget Course course);
-    //Use for create section by courseId
-    void fromSectionCreateRequest(SectionCreateRequest sectionCreateRequest, @MappingTarget Course course);
+    //Use for create update video
+    void fromVideoUpdateRequest(VideoUpdateRequest videoUpdateRequest, @MappingTarget Course course);
     //Video response
     @Mapping(target = "sectionOrderNo", source = "sectionOrderNo")
     VideoCreateRequest toVideoCreateRequest(VideoCreateRequest videoCreateRequest);

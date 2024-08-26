@@ -1,15 +1,17 @@
 package co.istad.mongbdhw.feature.course;
 
 import co.istad.mongbdhw.domain.Course;
+import co.istad.mongbdhw.feature.course.dto.FilterDto;
 import co.istad.mongbdhw.feature.course.dto.*;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
 public interface CourseService {
     //Create course
     void createCourse(CourseCreateRequest courseCreateRequest);
-    //Find all category
-    List<?> findAllCourse(String responseType);
+    //Find all course
+    PaginatedResponse<?> findAllCourse(String responseType,int page, int size);
 
     //Get private courses
 //    Optional<Course> getPrivateCourse(Boolean isDrafted);
@@ -55,10 +57,17 @@ public interface CourseService {
     //Update visibility
     void updateVisibility(String id, VisibilityUpdateRequest visibilityUpdateRequest);
 
+    //Update video by courseId
+    void updateVideo(String id, VideoUpdateRequest videoUpdateRequest);
+
     //Create a video
     VideoCreateRequest createVideo(String id, VideoCreateRequest videoCreateRequest);
 
     //Create section
     SectionCreateRequest createSection(String id, SectionCreateRequest sectionCreateRequest);
+
+    Page<?> createFilter(FilterDto filterDto, FilterResponse filterResponse, int page, int size);
+
+    Page<?> getFilter(String title, FilterResponse filterResponse, int page, int size);
 
 }
