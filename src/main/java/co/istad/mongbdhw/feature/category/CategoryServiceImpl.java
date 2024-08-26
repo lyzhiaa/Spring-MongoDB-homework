@@ -4,7 +4,7 @@ import co.istad.mongbdhw.domain.Category;
 import co.istad.mongbdhw.feature.category.dto.CategoryCreateRequest;
 import co.istad.mongbdhw.feature.category.dto.CategoryResponse;
 import co.istad.mongbdhw.feature.category.dto.CategoryUpdateRequest;
-import co.istad.mongbdhw.feature.mapper.CategoryMapper;
+import co.istad.mongbdhw.mapper.CategoryMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;

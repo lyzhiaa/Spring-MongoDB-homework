@@ -11,8 +11,10 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Document(collection = "sections")
 public class Section {
-    private String title;
+    @Id
     private Integer orderNo;
+    private String title;
     private List<Video> videos;
 }

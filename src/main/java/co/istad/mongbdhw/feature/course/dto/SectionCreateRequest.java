@@ -4,7 +4,7 @@ import co.istad.mongbdhw.domain.Video;
 
 import java.util.List;
 
-public record SectionResponse(
+public record SectionCreateRequest(
         String title,
         Integer orderNo,
         List<Video> videos

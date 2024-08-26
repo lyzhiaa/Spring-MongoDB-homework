@@ -1,11 +1,10 @@
 package co.istad.mongbdhw.feature.course.dto;
 
-public record VideoCreateRequest(
-        Integer sectionOrderNo,
+public record VideoUpdateRequest(
+        Integer sectionOrderNumber,
         String lectureNo,
         Integer orderNo,
         String title,
         String fileName
-
 ) {
 }

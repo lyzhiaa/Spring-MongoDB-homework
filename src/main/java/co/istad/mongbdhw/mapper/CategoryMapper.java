@@ -1,4 +1,4 @@
-package co.istad.mongbdhw.feature.mapper;
+package co.istad.mongbdhw.mapper;
 
 import co.istad.mongbdhw.domain.Category;
 import co.istad.mongbdhw.feature.category.dto.CategoryCreateRequest;
