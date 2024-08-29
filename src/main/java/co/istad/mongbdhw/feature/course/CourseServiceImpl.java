@@ -44,12 +44,12 @@ public class CourseServiceImpl implements CourseService {
         //Validate Course
         if (courseRepository.existsByTitle(courseCreateRequest.title())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT,
-                    "This Course is already exist!!!");
+                    "This Course is already exist");
         }
         //Validate Category
         categoryRepository.findByName(courseCreateRequest.categoryName())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "This category has not been found!!!"));
+                        "This category has not been found"));
         Course course = courseMapper.fromCourseCreateRequest(courseCreateRequest);
         course.setUuid(UUID.randomUUID().toString());
         course.setUpdatedAt(LocalDateTime.now());
@@ -89,14 +89,6 @@ public class CourseServiceImpl implements CourseService {
         return new PaginatedResponse<>(responseList, pageMetadata);
     }
 
-
-    //Get private courses
-    /*@Override
-    public Optional<Course> getPrivateCourse(Boolean isDrafted) {
-        Sort sortById = Sort.by(Sort.Direction.DESC, "id");
-        List<Course> courses = courseRepository.findAll(sortById);
-        return courseRepository.findByIsDrafted(isDrafted);
-    }*/
     @Override
     public List<Course> getPrivateCourse() {
         return courseRepository.findByIsDraftedIsTrue();
@@ -119,7 +111,7 @@ public class CourseServiceImpl implements CourseService {
     public CourseResponse findCourseByInstructorName(String instructorUsername) {
         Course course = courseRepository.findByInstructorUsername(instructorUsername)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "This course has not been found!!!"));
+                        "This course has not been found"));
         return courseMapper.toCourseResponse(course);
     }
 
@@ -127,7 +119,7 @@ public class CourseServiceImpl implements CourseService {
     public CourseResponseDetail findCourseDetail(String id) {
         Course course = courseRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "This course has not been found!!!"));
+                        "This course has not been found"));
         return courseMapper.toCourseResponseDetail(course);
     }
 
@@ -136,7 +128,7 @@ public class CourseServiceImpl implements CourseService {
     public CourseResponse findCourseById(String id) {
         Course course = courseRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "This course has not been found!!!"));
+                        "This course has not been found"));
         return courseMapper.toCourseResponse(course);
     }
 
@@ -152,7 +144,7 @@ public class CourseServiceImpl implements CourseService {
     public CourseResponse findCourseBySlug(String slug) {
         Course course = courseRepository.findBySlug(slug)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "This course has not been found!!!"));
+                        "This course has not been found"));
         return courseMapper.toCourseResponse(course);
     }
 
@@ -161,7 +153,7 @@ public class CourseServiceImpl implements CourseService {
     public CourseResponse updateCourse(String id, CourseUpdateRequest courseUpdateRequest) {
         Course course = courseRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "This course has not been found!!!"));
+                        "This course has not been found"));
 
         courseMapper.fromCourseUpdateRequest(courseUpdateRequest, course);
         course = courseRepository.save(course);
@@ -174,7 +166,7 @@ public class CourseServiceImpl implements CourseService {
     public void deleteCourse(String id) {
         Course course = courseRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "This course has not been found!!!"));
+                        "This course has not been found"));
         courseRepository.delete(course);
     }
 
@@ -183,7 +175,7 @@ public class CourseServiceImpl implements CourseService {
     public void enableCourse(String id) {
         Course course = courseRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "This course has not been found!!!"));
+                        "This course has not been found"));
         course.setIsDeleted(false);
         courseRepository.save(course);
     }
@@ -193,7 +185,7 @@ public class CourseServiceImpl implements CourseService {
     public void disableCourse(String id) {
         Course course = courseRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "This course has not been found!!!"));
+                        "This course has not been found"));
         course.setIsDeleted(true);
         courseRepository.save(course);
     }
@@ -204,11 +196,11 @@ public class CourseServiceImpl implements CourseService {
         //Validate course
         Course course = courseRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "This course has not been found!!!"));
+                        "This course has not been found"));
         //Validate thumbnail
         if (courseRepository.existsByThumbnail(updateThumbnail.thumbnail())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT,
-                    "This thumbnail is already exist!!!");
+                    "This thumbnail is already exist");
         }
         course.setThumbnail(updateThumbnail.thumbnail());
         courseRepository.save(course);
@@ -219,7 +211,7 @@ public class CourseServiceImpl implements CourseService {
     public void updatePayment(String id, PaymentUpdateRequest updatePaymentRequest) {
         Course course = courseRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "This course has not been found!!!"));
+                        "This course has not been found"));
         course.setIsPaid(updatePaymentRequest.status());
         courseRepository.save(course);
     }
@@ -229,7 +221,7 @@ public class CourseServiceImpl implements CourseService {
     public void updateVisibility(String id, VisibilityUpdateRequest visibilityUpdateRequest) {
         Course course = courseRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "This course has not been found!!!"));
+                        "This course has not been found"));
         course.setIsDrafted(visibilityUpdateRequest.status());
         courseRepository.save(course);
     }
@@ -240,7 +232,7 @@ public class CourseServiceImpl implements CourseService {
         //Validate course
         Course course = courseRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "This course has not been found!!!"));
+                        "This course has not been found"));
         courseMapper.fromVideoUpdateRequest(videoUpdateRequest, course);
         courseRepository.save(course);
     }
@@ -251,7 +243,7 @@ public class CourseServiceImpl implements CourseService {
         // Validate Course
         Course course = courseRepository.findById(courseId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "This course has not been found!!!"));
+                        "This course has not been found"));
 
         // Initialize the sections list if it is null
         if (course.getSections() == null) {
@@ -278,11 +270,11 @@ public class CourseServiceImpl implements CourseService {
     public VideoCreateRequest createVideo(String id, VideoCreateRequest videoCreateRequest) {
         // Validate Course
         courseRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "This course has not been found!!!"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "This course has not been found"));
 
         // Validate Section
         Section section = sectionRepository.findByOrderNo(videoCreateRequest.sectionOrderNo())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "This section has not been found!!!"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "This section has not been found"));
 
         // Create and set up Video
         Video video = courseMapper.fromVideoCreateRequest(videoCreateRequest);

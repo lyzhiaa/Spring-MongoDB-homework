@@ -46,7 +46,7 @@ public class CategoryServiceImpl implements CategoryService{
     public CategoryResponse findCategoryById(String id) {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "This category has not been found!!!"));
+                        "This category has not been found"));
         return categoryMapper.toCategoryResponse(category);
     }
 
@@ -55,7 +55,7 @@ public class CategoryServiceImpl implements CategoryService{
     public CategoryResponse updateCategory(String id, CategoryUpdateRequest categoryUpdateRequest) {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "This category has not been found!!!"));
+                        "This category has not been found"));
 
         categoryMapper.fromCategoryUpdateRequest(categoryUpdateRequest, category);
         category = categoryRepository.save(category);
@@ -68,7 +68,7 @@ public class CategoryServiceImpl implements CategoryService{
     public void deleteCategory(String id) {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "This category has not been found!!!"));
+                        "This category has not been found"));
         categoryRepository.delete(category);
     }
 
@@ -77,7 +77,7 @@ public class CategoryServiceImpl implements CategoryService{
     public void enableCategory(String id) {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "This category has not been found!!!"));
+                        "This category has not been found"));
         category.setIsDeleted(false);
         categoryRepository.save(category);
     }
@@ -87,7 +87,7 @@ public class CategoryServiceImpl implements CategoryService{
     public void disableCategory(String id) {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "This category has not been found!!!"));
+                        "This category has not been found"));
         category.setIsDeleted(true);
         categoryRepository.save(category);
     }
